@@ -1,0 +1,183 @@
+//-------------------------------
+// Modelsim Compile commands 
+// Author: Markus Leiter
+// Version: 1.1
+// Date: 25.03.2019
+//
+// Version history: (25.03.2019) 1.1: added "presentation" tag
+// Version history: (24.03.2019) 1.0: Added ProblemMatchers
+//-------------------------------
+{
+    "version": "2.0.0",
+    "tasks": [
+        {            
+            "label": "compile vhdl",
+            "command": "cmd.exe",
+            "type": "shell",
+            "args": [ 
+                "/C",
+                "vlib", 
+                "${env:temp}\\work",
+                ";",
+                "vmap",  
+                "work",
+                "${env:temp}\\work",
+                ";",
+                "vcom",
+                "${file}",
+               
+            ],
+            "group": {                
+                "kind": "build",            
+                "isDefault": true
+            },
+
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+
+            "problemMatcher":[
+            {
+                "fileLocation": ["absolute"],
+                "owner": "vhdl",
+                "pattern": {
+                    "regexp":  "\\*+\\s+(Error|Warning)[:|\\s+\\(\\.*\\)].*\\s(.:.*\\w*)\\((\\d+)\\).(.*)",
+                    "file": 2,
+                    "line": 3,
+                    "column": 0,                                        
+                    "severity": 1,
+                    "message": 4
+                    
+                }           
+            },
+            {
+                "fileLocation": ["absolute"],
+                "owner": "other",
+                "pattern": {
+                    "regexp":  "\\*+\\s+(Error|Warning): \\(.*\\) (.*)",
+                    "column": 0,
+                    "file": 0,                                        
+                    "severity": 1,
+                    "message": 2
+                    
+                }           
+            }
+        ],
+        },
+
+        {
+            "label": "run do-file GUI",
+            "command": "cmd.exe",
+            "type": "shell",
+            "args": [
+                "/C",
+                "vsim",
+                "-gui",
+                "-do",
+                "${file}"
+            ],
+
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+
+            "options": { "cwd":"${fileDirname}" },
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+        },
+
+        {
+            "label": "run do-file Shell",
+            "command": "cmd.exe",
+            "type": "shell",
+            "args": [
+                "/C",
+                "vsim",
+                "-c",
+                "-do",
+                "${file}"
+                
+            ],
+            "options": { "cwd":"${fileDirname}" },
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            
+            "problemMatcher":[
+                {
+                    "fileLocation": ["absolute"],
+                    "owner": "vhdl",
+                    "pattern": {
+                        "regexp":  "\\*+\\s+(Error|Warning)[:|\\s+\\(\\.*\\)].*\\s(.:.*\\w*)\\((\\d+)\\).(.*)",
+                        "file": 2,
+                        "line": 3,
+                        "column": 0,                                        
+                        "severity": 1,
+                        "message": 4
+                        
+                    }           
+                },
+                {
+                    "fileLocation": ["absolute"],
+                    "owner": "other",
+                    "pattern": {
+                        "regexp":  "\\*+\\s+(Error|Warning): \\(.*\\) (.*)",
+                        "column": 0,
+                        "file": 0,                                        
+                        "severity": 1,
+                        "message": 2
+                        
+                    }           
+                },
+                {
+                    "fileLocation": ["absolute"],
+                    "owner": "filenotFound",
+                    "pattern": {
+                        "regexp":  ".*(ERROR|WARNING): (.*:(.*))",
+                        "column": 0,
+                        "file": 3,                                        
+                        "severity": 1,
+                        "message": 2
+                        
+                    }           
+                },
+                {
+                   
+                    "fileLocation":["relative", "${fileDirname}"],
+                    "owner": "errorInScript",
+                    "pattern": {
+                        "regexp":  "\\*\\* (Error|Warning): (.*)\\((\\d+)\\):(.*)",
+                        "column": 0,
+                        "file": 2,                                        
+                        "severity": 1,
+                        "message": 4,
+                        "line": 3
+                        
+                    }           
+                }
+            ]
+        }
+    ]
+}
