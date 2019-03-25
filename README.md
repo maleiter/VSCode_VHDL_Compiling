@@ -7,6 +7,9 @@ Library work is generated at LOCAL/TEMP/work
 ## Requirements:
 This Tasks Require Modelsim or Questasim. 
 
+## OS Support: 
++ Windows
+
 ## Changes: 
 
 ### Version 1.1:
